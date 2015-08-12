@@ -1,0 +1,17 @@
+{
+  "name": "django-node-chat",
+  "version": "1.0.0",
+  "description": "django,node chat",
+  "main": "chat.js",
+  "dependencies": {
+    "cookie": "^0.1.3",
+    "redis": "^0.12.1",
+    "socket.io": "^1.3.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sangyoon Lee",
+  "license": "ISC"
+}
