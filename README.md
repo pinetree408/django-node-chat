@@ -16,26 +16,26 @@ virtualenv venv
 
 . venv/bin/activate 
 
+cd django
+
 pip install -r requirements.txt
 
-cd django_node_chat
+cd app
 
 python manage.py migrate
 
 python manage.py createsuperuser
 
-cd node
+cd ../../node
 
 npm install
-
-brew install redis
-
-redis-server
 
 ```
 
 ### Running on local
 ```
+cd django
+
 python manage.py runserver
 
 #another console

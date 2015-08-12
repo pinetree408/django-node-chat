@@ -1,0 +1,115 @@
+{% extends 'chat/message_base.html' %}
+
+{% load url from future %}
+
+{% block extra_head %}
+
+<script src="{{async_url}}/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+	(function($) {
+		$(function() {
+			var token = "{{csrf_token}}";
+			var messageTmpl = $('#messageTemplate');
+			var container = $('#log');
+			var input = $('#input-text');
+			var createMessage = function(message, is_append) {
+				var append = is_append || false;
+				var html = messageTmpl.render(message);
+				if (append === true) {
+					container.append(html);
+				} else {
+					container.prepend(html);
+				}
+			}
+			var deleteMessage = function(id) {
+				$('.message[data-id="' + id + '"]').fadeOut(function() {
+					$(this).remove();
+				});
+			}
+			{% if request.GET.choice == 'node+socketio' %}
+				var socket = io.connect('{{async_url}}');
+				socket.on('message', function(data) {
+					console.log(data);
+				});
+				socket.on('message-create', function(data) {
+					console.log(data);
+					createMessage(data);
+				});
+				socket.on('message-delete', function(data) {
+					deleteMessage(data);
+				});
+			{% endif %}
+			// render all messages from database
+			{% for object in object_list %}
+				var message = {
+					"id" : "{{object.pk}}",
+					"user" : "{{object.user.username}}",
+					"text" : "{{object.text|linebreaksbr}}",
+					"url_delete" : "{% url 'chat_message_delete' pk=object.pk %}"
+				}
+				createMessage(message, true);
+			{% endfor %}
+			input.on('keyup', function(event) {
+				if (event.keyCode == 13) {
+					var value = $.trim($(this).val());
+					if (value == '') {
+						return;
+					}
+					var data = {
+						'csrfmiddlewaretoken' : token,
+						"text" : value,
+						"user" : "{{user.id}}"
+					};
+					$.post("{% url 'chat_message_create' %}", data, function(data) {
+						if (data.status === 'ok') {
+							$.noop;
+						}
+					}, "json");
+					$(this).val('');
+				}
+			})
+			container.on('click', '.message-delete', function() {
+				var self = $(this);
+				var url = self.find('a').attr('href');
+				var data = {
+					'csrfmiddlewaretoken' : token
+				};
+				$.post(url, data, function() {
+					if (data.status === 'ok') {
+						$.noop;
+					}
+				}, "json");
+				return false;
+			});
+		})
+	})(jQuery)
+</script>
+{% endblock %}
+
+
+{% block js_templates %}
+
+    {% load chat_tags %}
+
+    {% verbatim %}
+      <script type="text/x-jsrender" id="messageTemplate">
+        <div class="message" data-id="{{>id}}">
+          <span class="message-author">{{>user}}</span> said: 
+          <span class="message-text">{{>text}}</span>
+          <span class="message-delete"><a href="{{>url_delete}}" class="message-delete-image">&nbsp;</a></span>
+        </div>
+      </script>
+    {% endverbatim %}
+{% endblock %}
+
+{% block content %}
+    <a id="home" href="{% url 'login' %}" class="nav" />Home</a>
+    <a id="logout" href="{% url 'logout' %}" class="nav" />Logout</a>
+    <div id="content">
+        <div id="input">
+            <input type="text" id="input-text" placeholder="type new message and press ENTER..." />
+        </div>
+        <div id="log"></div>
+    </div>
+{% endblock %}
