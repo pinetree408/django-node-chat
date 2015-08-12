@@ -27,6 +27,11 @@ python manage.py createsuperuser
 cd node
 
 npm install
+
+brew install redis
+
+redis-server
+
 ```
 
 ### Running on local
