@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #chat
+    # Chat
     'chat',
 )
 
@@ -103,6 +103,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Login
 LOGIN_URL = '/'
 
+# Node server.js URL
 ASYNC_BACKEND_URL = 'http://localhost:8001'

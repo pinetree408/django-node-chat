@@ -1,7 +1,5 @@
 {% extends 'chat/message_base.html' %}
 
-{% load url from future %}
-
 {% block extra_head %}
 
 <script src="{{async_url}}/socket.io/socket.io.js"></script>
@@ -27,19 +25,17 @@
 					$(this).remove();
 				});
 			}
-			{% if request.GET.choice == 'node+socketio' %}
-				var socket = io.connect('{{async_url}}');
-				socket.on('message', function(data) {
-					console.log(data);
-				});
-				socket.on('message-create', function(data) {
-					console.log(data);
-					createMessage(data);
-				});
-				socket.on('message-delete', function(data) {
-					deleteMessage(data);
-				});
-			{% endif %}
+			var socket = io.connect('{{async_url}}');
+			socket.on('message', function(data) {
+				console.log(data);
+			});
+			socket.on('message-create', function(data) {
+				console.log(data);
+				createMessage(data);
+			});
+			socket.on('message-delete', function(data) {
+				deleteMessage(data);
+			});
 			// render all messages from database
 			{% for object in object_list %}
 				var message = {
@@ -97,7 +93,7 @@
         <div class="message" data-id="{{>id}}">
           <span class="message-author">{{>user}}</span> said: 
           <span class="message-text">{{>text}}</span>
-          <span class="message-delete"><a href="{{>url_delete}}" class="message-delete-image">&nbsp;</a></span>
+          <span class="message-delete"><a href="{{>url_delete}}" class="message-delete-image">delete</a></span>
         </div>
       </script>
     {% endverbatim %}

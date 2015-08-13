@@ -6,7 +6,7 @@ An application for chatting on Django & Node.
 
 ### Setting up your system
 ```sh
-https://github.com/pinetree408/django_node_chat.git
+git clone https://github.com/pinetree408/django_node_chat.git
 
 cd django_node_chat
 

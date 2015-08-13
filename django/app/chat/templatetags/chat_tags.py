@@ -27,7 +27,6 @@ def verbatim(parser, token):
     text = []
     while 1:
         token = parser.tokens.pop(0)
-	print token.token_type
         if token.contents == 'endverbatim':
             break
         if token.token_type == template.base.TOKEN_VAR:

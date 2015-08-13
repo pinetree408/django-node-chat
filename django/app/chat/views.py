@@ -1,23 +1,25 @@
 # coding: utf-8
-from django.views import generic
+from django.views.generic import ListView, CreateView, DeleteView
 from django.core.urlresolvers import reverse
-from chat import models
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 
+# chat model
+from chat import models
+
 import json
 
-
-class MessageListView(generic.ListView):
+class MessageListView(ListView):
     queryset = models.Message.objects.all()[:10]
+    temaplate_name = "chat/message_list.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(MessageListView, self).get_context_data(*args, **kwargs)
         context['async_url'] = settings.ASYNC_BACKEND_URL
         return context
 
-class MessageCreateView(generic.CreateView):
+class MessageCreateView(CreateView):
     model = models.Message
     fields = '__all__'
     template_name = "chat/message_create.html"
@@ -31,7 +33,7 @@ class MessageCreateView(generic.CreateView):
         else:
             return HttpResponseRedirect(self.get_success_url())
 
-class MessageDeleteView(generic.DeleteView):
+class MessageDeleteView(DeleteView):
     model = models.Message
 
     def delete(self, request, *args, **kwargs):
