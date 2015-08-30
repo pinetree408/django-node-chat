@@ -8,7 +8,8 @@
       <a id='logout' href='{% url "account_logout" %}' class='nav' />Logout</a>
       <div class='center'>
         <h2>Welcome to Django Node Realtime Chat</h2>
-        <br />
+	<br />
+	<a href='{% url "chat_room_create" %}'>Make Room</a>
         {% for object in object_list %}
           <form method='GET' action='{% url "chat_message_list" room_name=object.name %}'>
             <button type='submit' class='btn btn-success' />Go Chat Room!</a>

@@ -6,17 +6,26 @@ from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 
 # chat model
-from chat import models
+from chat import models, forms
 
 import json
 
+class RoomCreateView(CreateView):
+    model = models.Room
+    form_class = forms.RoomForm
+    template_name = "chat/room_create.html"
+    success_url = "/"
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return super(RoomCreateView, self).form_valid(form)
+
 class MessageListView(ListView):
-    queryset = models.Message.objects.all()[:10]
     temaplate_name = "chat/message_list.html"
 
     def get_queryset(self):
         room = models.Room.objects.filter(name=self.kwargs['room_name'])[0]
-        queryset = models.Message.objects.filter(room=room)[:10]
+        queryset = models.Message.objects.filter(room=room)
         return queryset
 
     def get_context_data(self, *args, **kwargs):
