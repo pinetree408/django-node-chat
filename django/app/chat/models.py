@@ -16,10 +16,20 @@ def send_event(event_type, event_data):
     }
     urllib2.urlopen(settings.ASYNC_BACKEND_URL, urllib.urlencode(to_send)) 
 
+class Room(models.Model):
+    name = models.CharField(max_length=200)
+    created_at = models.DateTimeField(u"created at", auto_now_add=True)
+
+    class Meta:
+        ordering = ('-id',)
+
+    def __unicode__(self):
+        return "%s" % (self.name,)
 
 class Message(models.Model):
 
     user = models.ForeignKey(User)
+    room = models.ForeignKey(Room)
     text = models.TextField(u"text")
     created_at = models.DateTimeField(u"created at", auto_now_add=True)
 

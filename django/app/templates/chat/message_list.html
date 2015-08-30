@@ -54,7 +54,8 @@
 	  var data = {
 	    'csrfmiddlewaretoken' : token,
 	    'text' : value,
-	    'user' : '{{user.id}}'
+	    'user' : '{{user.id}}',
+            'room' : '{{room.id}}'
           };
 	  $.post('{% url "chat_message_create" %}', data, function(data) {
 	    if (data.status === 'ok') {

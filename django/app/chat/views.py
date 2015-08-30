@@ -14,16 +14,23 @@ class MessageListView(ListView):
     queryset = models.Message.objects.all()[:10]
     temaplate_name = "chat/message_list.html"
 
+    def get_queryset(self):
+        room = models.Room.objects.filter(name=self.kwargs['room_name'])[0]
+        queryset = models.Message.objects.filter(room=room)[:10]
+        return queryset
+
     def get_context_data(self, *args, **kwargs):
+        room = models.Room.objects.filter(name=self.kwargs['room_name'])[0]
         context = super(MessageListView, self).get_context_data(*args, **kwargs)
         context['async_url'] = settings.ASYNC_BACKEND_URL
+        context['room'] = room
         return context
 
 class MessageCreateView(CreateView):
     model = models.Message
-    fields = '__all__'
     template_name = "chat/message_create.html"
     success_url = reverse_lazy("chat_message_list")
+    fields = "__all__"
 
     def form_valid(self, form):
         self.object = form.save()
