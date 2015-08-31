@@ -5,8 +5,9 @@
 <script src='{{async_url}}/socket.io/socket.io.js'></script>
 
 <script type='text/javascript'>
-  (function($) {
-    $(function() {
+messageCreate = (function($) {
+  return {
+    init: function(){
       var token = '{{csrf_token}}';
       var container = $('#log');
       var input = $('#input-text');
@@ -17,17 +18,18 @@
                    '<span class="message-delete"><a href='+message.url_delete+
                    ' class="message-delete-image">delete</a></span></div>';
         return html;                   
-      }
+      };
       var createMessage = function(message) {
         var html = messageTemplate(message);
       	container.prepend(html);
-      }
+      };
       var deleteMessage = function(id) {
         $('.message[data-id="' + id + '"]').fadeOut(
           function() {
             $(this).remove();
           });
-      }
+      };
+      //Socekt
       var socket = io.connect('{{async_url}}');
       socket.on('message-create', function(data) {
         createMessage(data);
@@ -35,6 +37,7 @@
       socket.on('message-delete', function(data) {
         deleteMessage(data);
       });
+
       // render all messages from database
       {% for object in object_list %}
         var message = {
@@ -45,6 +48,8 @@
 	}
         createMessage(message, true);
       {% endfor %}
+      
+      // Handler
       input.on('keyup', function(event) {
         if (event.keyCode == 13) {
 	  var value = $.trim($(this).val());
@@ -78,8 +83,13 @@
 	}, "json");
 	return false;
       });
-    })
-  })(jQuery)
+    }
+  };
+})(jQuery)
+
+$(function(){
+  messageCreate.init();
+});
 </script>
 {% endblock %}
 
