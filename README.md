@@ -41,7 +41,7 @@ python manage.py runserver
 #another console
 cd node
 
-node chat.js
+node server.js
 
 ```
 
