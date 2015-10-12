@@ -10,6 +10,7 @@ from chat import models, forms
 
 import json
 
+
 class RoomCreateView(CreateView):
     model = models.Room
     form_class = forms.RoomForm
@@ -19,6 +20,7 @@ class RoomCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save()
         return super(RoomCreateView, self).form_valid(form)
+
 
 class MessageListView(ListView):
     temaplate_name = "chat/message_list.html"
@@ -35,6 +37,7 @@ class MessageListView(ListView):
         context['room'] = room
         return context
 
+
 class MessageCreateView(CreateView):
     model = models.Message
     template_name = "chat/message_create.html"
@@ -49,6 +52,7 @@ class MessageCreateView(CreateView):
         else:
             return HttpResponseRedirect(self.get_success_url())
 
+
 class MessageDeleteView(DeleteView):
     model = models.Message
 
@@ -61,4 +65,4 @@ class MessageDeleteView(DeleteView):
             return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-    	return reverse("chat_message_list")
+        return reverse("chat_message_list")

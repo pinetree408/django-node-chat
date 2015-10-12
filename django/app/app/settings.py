@@ -63,7 +63,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR + '/templates' 
+            BASE_DIR + '/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -117,7 +117,7 @@ LOGIN_REDIRECT_URL = '/'
 # Node server.js URL
 ASYNC_BACKEND_URL = 'http://localhost:8001'
 
-#Django allauth
+# Django allauth
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',

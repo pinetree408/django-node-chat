@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -14,7 +14,8 @@ def send_event(event_type, event_data):
         'event': event_type,
         'data': event_data
     }
-    urllib2.urlopen(settings.ASYNC_BACKEND_URL, urllib.urlencode(to_send)) 
+    urllib2.urlopen(settings.ASYNC_BACKEND_URL, urllib.urlencode(to_send))
+
 
 class Room(models.Model):
 
@@ -26,6 +27,7 @@ class Room(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.name,)
+
 
 class Message(models.Model):
 
@@ -45,7 +47,7 @@ class Message(models.Model):
             'id': self.pk,
             'user': self.user.username,
             'text': self.text,
-            'url_delete': reverse("chat_message_delete", kwargs={'pk':self.pk})
+            'url_delete': reverse("chat_message_delete", kwargs={'pk': self.pk})
         }
         return json.dumps(data)
 
