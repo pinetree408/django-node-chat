@@ -5,15 +5,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 
-# chat model
-from chat import models, forms
+# chat model, from
+from models import Room, Message
+from forms import RoomForm
 
 import json
 
 
 class RoomCreateView(CreateView):
-    model = models.Room
-    form_class = forms.RoomForm
+    model = Room
+    form_class = RoomForm
     template_name = "chat/room_create.html"
     success_url = "/"
 
@@ -26,12 +27,12 @@ class MessageListView(ListView):
     temaplate_name = "chat/message_list.html"
 
     def get_queryset(self):
-        room = models.Room.objects.filter(name=self.kwargs['room_name'])[0]
-        queryset = models.Message.objects.filter(room=room)
+        room = Room.objects.filter(name=self.kwargs['room_name'])[0]
+        queryset = Message.objects.filter(room=room)
         return queryset
 
     def get_context_data(self, *args, **kwargs):
-        room = models.Room.objects.filter(name=self.kwargs['room_name'])[0]
+        room = Room.objects.filter(name=self.kwargs['room_name'])[0]
         context = super(MessageListView, self).get_context_data(*args, **kwargs)
         context['async_url'] = settings.ASYNC_BACKEND_URL
         context['room'] = room
@@ -39,7 +40,7 @@ class MessageListView(ListView):
 
 
 class MessageCreateView(CreateView):
-    model = models.Message
+    model = Message
     template_name = "chat/message_create.html"
     success_url = reverse_lazy("chat_message_list")
     fields = "__all__"
@@ -54,7 +55,7 @@ class MessageCreateView(CreateView):
 
 
 class MessageDeleteView(DeleteView):
-    model = models.Message
+    model = Message
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
