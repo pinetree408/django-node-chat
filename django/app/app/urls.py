@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.IndexView.as_view(), name="index"),
     url(r'', include('chat.urls')),
+    url(r'', include('room.urls')),
     url(r'^accounts/', include('allauth.urls')),
 ]

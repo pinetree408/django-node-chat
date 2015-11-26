@@ -3,24 +3,18 @@ from django.views.generic import ListView, CreateView, DeleteView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+
+# ASYNC_BACKEND_URL
 from django.conf import settings
 
-# chat model, from
-from models import Room, Message
-from forms import RoomForm
+# chat model, form
+from models import Message
+
+# room model, form
+from room.models import Room
+from room.forms import RoomForm
 
 import json
-
-
-class RoomCreateView(CreateView):
-    model = Room
-    form_class = RoomForm
-    template_name = "chat/room_create.html"
-    success_url = "/"
-
-    def form_valid(self, form):
-        self.object = form.save()
-        return super(RoomCreateView, self).form_valid(form)
 
 
 class MessageListView(ListView):

@@ -5,11 +5,6 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns('',
     url(
-        regex=r'^room/create/$',
-        view=login_required(views.RoomCreateView.as_view()),
-        name='chat_room_create',
-    ),
-    url(
         regex=r'^(?P<room_name>\w+)/message/$',
         view=login_required(views.MessageListView.as_view()),
         name='chat_message_list',
