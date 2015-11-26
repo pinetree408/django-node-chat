@@ -12,7 +12,8 @@
 	<a href='{% url "chat_room_create" %}'>Make Room</a>
         {% for object in object_list %}
           <form method='GET' action='{% url "chat_message_list" room_name=object.name %}'>
-            <button type='submit' class='btn btn-success' />Go Chat Room!</a>
+            {{ object.name }}
+            <button type='submit' class='btn btn-success' >Go Chat Room!</button>
           </form>
         {% endfor %}
       </div>
