@@ -39,6 +39,7 @@
         <thead>
           <tr>
             <th class="mdl-data-table__cell--non-numeric">Room name</th>
+            <th class="mdl-data-table__cell--non-numeric">Room creator</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +47,9 @@
             <tr>
               <td class="mdl-data-table__cell--non-numeric">
                 <a href='{% url "chat_message_list" room_name=object.name %}'>{{object.name}}</a>
+              </td>
+              <td class="mdl-data-table__cell--non-numeric">
+                <a href='{% url "chat_message_list" room_name=object.name %}'>{{object.creator.username}}</a>
               </td>
             </tr>
 	  {% endfor %}
