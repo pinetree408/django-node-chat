@@ -35,26 +35,21 @@
     <div class="page-content">
       <h2>Welcome to Django Node Realtime Chat</h2>
       <a href='{% url "chat_room_create" %}'>Make Room</a>
-      <table class="mdl-data-table mdl-js-data-table">
-        <thead>
-          <tr>
-            <th class="mdl-data-table__cell--non-numeric">Room name</th>
-            <th class="mdl-data-table__cell--non-numeric">Room creator</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for object in object_list %}
-            <tr>
-              <td class="mdl-data-table__cell--non-numeric">
-                <a href='{% url "chat_message_list" room_name=object.name %}'>{{object.name}}</a>
-              </td>
-              <td class="mdl-data-table__cell--non-numeric">
-                <a href='{% url "chat_message_list" room_name=object.name %}'>{{object.creator.username}}</a>
-              </td>
-            </tr>
-	  {% endfor %}
-        </tbody>
-      </table>
+      <div class="mdl-grid">
+        {% for object in object_list %}
+          <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col">
+            <div class="mdl-card__title">
+              <h2 class="mdl-card__title-text">{{object.name}} / {{object.creator.username}}</h2>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                href='{% url "chat_message_list" room_name=object.name %}'>
+                Get Started
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </main>
 {% endblock %}
