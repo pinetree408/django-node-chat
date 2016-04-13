@@ -94,12 +94,13 @@ $(function(){
 {% endblock %}
 
 {% block content %}
-    <a id='home' href='{% url "index" %}' class='nav' />Home</a>
-    <a id='logout' href='{% url "account_logout" %}' class='nav' />Logout</a>
-    <div id="content">
-        <div id="log"></div>
-        <div id="input">
-            <input type="text" id="input-text" placeholder="type new message and press ENTER..." />
-        </div>
-    </div>
+<a id='home' href='{% url "index" %}' class='nav' />Home</a>
+<a id='logout' href='{% url "account_logout" %}' class='nav' />Logout</a>
+<div id="content">
+  <div id="log"></div>
+  <div id="input" class="mdl-textfield mdl-js-textfield">
+    <input id="input-text" class="mdl-textfield__input" type="text">
+    <label class="mdl-textfield__label" for="input-text">Text...</label>
+  </div>
+</div>
 {% endblock %}
