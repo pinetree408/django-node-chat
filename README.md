@@ -37,6 +37,8 @@ npm install
 ```
 cd django
 
+cd app
+
 python manage.py runserver
 
 #another console
