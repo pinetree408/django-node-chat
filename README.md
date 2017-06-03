@@ -50,8 +50,3 @@ node server.js
 
 ## Code covention
 depends on pep8
-
-# License
-all directories and their contents are Copyright Lee Sang-Yoon.
-
-You may not reuse anything therein without my permission.
