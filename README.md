@@ -1,7 +1,8 @@
 Django-Node-Chat
 ==================
 An application for chatting on Django & Node.
-Python version : 2.7.10 
+- Python version : 2.7.10
+- Node : 5.1.0
 
 ## How to Work on this Project (on a mac)
 
